@@ -6,17 +6,17 @@ const Navbar = () => {
   const [isAuth, setIsAuth] = useState(false)
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-8 lg:px-6 py-4 border-b border-gray-300 bg-white relative transition-all">
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-8 lg:px-6 py-4 border-b border-gray-300 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-50 relative transition-all">
 
       <div className="flex items-center gap-10">
         <Link to="/" className="font-bold text-lg">
-          My Store
+          Veloria Store
         </Link>
 
         <div className="hidden sm:flex items-center gap-6 text-sm font-medium text-gray-600">
           <Link to="/" className="hover:text-indigo-600 transition">Home</Link>
-          <Link to="/" className="hover:text-indigo-600 transition">About</Link>
-          <Link to="/" className="hover:text-indigo-600 transition">Contact</Link>
+          <Link to="/about" className="hover:text-indigo-600 transition">About</Link>
+          <Link to="/contact" className="hover:text-indigo-600 transition">Contact</Link>
           <Link to="/products" className="hover:text-indigo-600 transition">Products</Link>
         </div>
       </div>
@@ -41,7 +41,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {!isAuth ? (
             <>
-              <Link to="/auth/login" className="px-5 py-2 text-indigo-600 hover:bg-indigo-50 transition rounded-full font-medium text-sm">
+              <Link to="/auth/login" className="px-5 py-2 text-indigo-600 hover:bg-indigo-500 hover:text-white transition rounded-full font-medium text-sm">
                 Login
               </Link>
               <Link to="/auth/register" className="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm font-medium">
@@ -89,7 +89,7 @@ const Navbar = () => {
 
           {/* Drawer Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <span className="font-bold text-lg">My Store</span>
+            <span className="font-bold text-lg">Veloria Store</span>
             <button onClick={() => setOpen(false)} aria-label="Close Menu" className="p-2 text-gray-500 hover:text-black">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -112,8 +112,8 @@ const Navbar = () => {
           {/* Drawer Links */}
           <div className="flex flex-col px-6 py-6 gap-5 text-base font-medium">
             <Link to="/" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">Home</Link>
-            <Link to="/" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">About</Link>
-            <Link to="/" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">Contact</Link>
+            <Link to="/about" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">About</Link>
+            <Link to="/contact" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">Contact</Link>
             <Link to="/products" onClick={() => setOpen(false)} className="hover:text-indigo-600 transition">Products</Link>
           </div>
 
