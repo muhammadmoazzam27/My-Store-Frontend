@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import "@/utils/global"
 
 const initialState = {
   fullName: "",
@@ -8,6 +10,10 @@ const initialState = {
 }
 
 const Register = () => {
+
+  const API = import.meta.env.VITE_API_URL
+
+  const navigate = useNavigate()
 
   const [state, setState] = useState(initialState)
   const [showPassword, setShowPassword] = useState(false)
@@ -24,10 +30,42 @@ const Register = () => {
 
     const { fullName, email, password } = state;
 
+    if (fullName.trim().length < 3) {
+      toastify('Enter your full name', "error");
+      return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')) {
+      toastify('Please enter a valid email address!', 'error');
+      return;
+    }
+
+    if (password.length < 6) {
+      toastify('Password must be at least 6 characters long!', 'error');
+      return;
+    }
+
     const user = { fullName, email, password }
 
-    console.log("User => ", user);
+    setLoading(true);
 
+    axios.post(`${API}/auth/register`, user)
+
+      .then((res) => {
+        const { status, data } = res;
+        if (status === 201) {
+          toastify(data.message || "user registered", "success");
+          navigate("/auth/login");
+          return console.log("user => ", data.user)
+        }
+      })
+      .catch((error) => {
+        console.log("Error => ", error)
+        return toastify("Server Error", "error")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
 
   }
 
