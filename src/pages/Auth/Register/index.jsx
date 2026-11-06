@@ -31,18 +31,15 @@ const Register = () => {
     const { fullName, email, password } = state;
 
     if (fullName.trim().length < 3) {
-      toastify('Enter your full name', "error");
-      return;
+      return toastify("Enter your full name", "error")
     }
 
     if (!email.includes('@') || !email.includes('.')) {
-      toastify('Please enter a valid email address!', 'error');
-      return;
+      return toastify("Please enter a valid email address!", "error")
     }
 
     if (password.length < 6) {
-      toastify('Password must be at least 6 characters long!', 'error');
-      return;
+      return toastify("Password must be at least 6 characters long!", "error")
     }
 
     const user = { fullName, email, password }
@@ -56,12 +53,14 @@ const Register = () => {
         if (status === 201) {
           toastify(data.message || "user registered", "success");
           navigate("/auth/login");
-          return console.log("user => ", data.user)
+          console.log("user => ", data.user)
+          return
         }
       })
       .catch((error) => {
         console.log("Error => ", error)
-        return toastify("Server Error", "error")
+        toastify("Server Error", "error")
+        return
       })
       .finally(() => {
         setLoading(false)

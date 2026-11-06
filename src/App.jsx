@@ -1,11 +1,17 @@
-import React from 'react';
-
 import Routes from "@/pages/Routes";
+import { useState } from "react";
+import ScreenLoader from "./components/ScreenLoader";
 
 const App = () => {
+  const [isAuth, setIsAuth] = useState(true)
   return (
     <>
-    <Routes />
+      {
+        !isAuth ?
+          <ScreenLoader />
+          :
+          <Routes />
+      }
     </>
   )
 }

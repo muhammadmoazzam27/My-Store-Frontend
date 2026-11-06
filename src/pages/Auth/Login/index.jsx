@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import "@/utils/global"
 
 const initialState = {
   email: "",
@@ -8,9 +10,13 @@ const initialState = {
 
 const Login = () => {
 
+  const VITE_API_URL = import.meta.env.VITE_API_URL
+
   const [state, setState] = useState(initialState)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +29,28 @@ const Login = () => {
     const { email, password } = state;
 
     const user = { email, password }
+
+    setLoading(true)
+
+    axios.post(`${VITE_API_URL}/auth/login`, user)
+
+      .then((res) => {
+        const { status, data } = res;
+        if (status === 200) {
+          console.log("Token => ", data.token)
+          toastify(data.message || "login successful", "success")
+          navigate("/")
+          return
+        }
+      })
+      .catch((error) => {
+        console.error("Error => ", error)
+        toastify("Server error", "error")
+        return
+      })
+      .finally(() => {
+        setLoading(false)
+      })
 
   }
 
