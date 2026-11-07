@@ -39,7 +39,6 @@ const Login = () => {
       .then((res) => {
         const { status, data } = res;
         if (status === 200) {
-          console.log("Token => ", data.token)
           localStorage.setItem("jwt", data.token)
           readProfile(data.token)
           toastify(data.message || "login successful", "success")
@@ -48,9 +47,8 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        toastify("Something went wrong", "error")
         console.error("Error => ", error)
-        toastify("Server error", "error")
-        return
       })
       .finally(() => {
         setLoading(false)

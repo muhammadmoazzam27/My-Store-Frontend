@@ -53,14 +53,22 @@ const Register = () => {
         if (status === 201) {
           toastify(data.message || "user registered", "success");
           navigate("/auth/login");
-          console.log("user => ", data.user)
           return
         }
       })
       .catch((error) => {
-        console.log("Error => ", error)
-        toastify("Server Error", "error")
-        return
+        const status = error?.res?.status
+        const message = error?.res?.data?.message
+        if (status === 400) {
+          return toastify(message || "All fields are required!", "error")
+        }
+        if (status === 403) {
+          return toastify(message || "A user already exist", "error")
+        }
+        if (status === 500) {
+          return toastify(message || "Internal server error", "error")
+        }
+        console.error("Error => ", error)
       })
       .finally(() => {
         setLoading(false)
@@ -86,7 +94,6 @@ const Register = () => {
             <input
               name="fullName"
               type="text"
-              required
               placeholder="Enter your Name"
               className="w-full px-4 py-2 border border-gray-300 rounded-full text-xs sm:text-sm outline-none focus:border-indigo-500 transition"
               onChange={handleChange}
@@ -98,7 +105,6 @@ const Register = () => {
             <input
               name="email"
               type="email"
-              required
               placeholder="Enter your email address"
               className="w-full px-4 py-2 border border-gray-300 rounded-full text-xs sm:text-sm outline-none focus:border-indigo-500 transition"
               onChange={handleChange}
@@ -111,7 +117,6 @@ const Register = () => {
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
-                required
                 placeholder="••••••••"
                 className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full text-xs sm:text-sm outline-none focus:border-indigo-500 transition"
                 onChange={handleChange}

@@ -4,7 +4,7 @@ import { useAuthContext } from '@/context/AuthContext'
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
-  const { isAuth } = useAuthContext();
+  const { isAuth, handleLogout } = useAuthContext();
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-8 lg:px-6 py-4 border-b border-gray-300 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-50 relative transition-all">
@@ -54,7 +54,7 @@ const Navbar = () => {
               <Link to="/dashboard/user-profile" className="px-5 py-2 text-indigo-600 hover:bg-indigo-50 transition rounded-full font-medium text-sm">
                 Dashboard
               </Link>
-              <button onClick={() => setIsAuth(false)} className="px-6 py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-full text-sm font-medium">
+              <button onClick={handleLogout} className="px-6 py-2 bg-red-500 hover:bg-red-600 transition text-white rounded-full text-sm font-medium">
                 Logout
               </button>
             </>
@@ -134,7 +134,7 @@ const Navbar = () => {
                 <Link to="/dashboard/user-profile" onClick={() => setOpen(false)} className="w-full text-center py-2.5 text-indigo-600 border border-indigo-600 hover:bg-indigo-50 transition rounded-full font-medium text-sm">
                   Dashboard
                 </Link>
-                <button onClick={() => { setIsAuth(false); setOpen(false); }} className="w-full py-2.5 bg-red-500 hover:bg-red-600 transition text-white rounded-full font-medium text-sm">
+                <button onClick={() => { handleLogout; setOpen(false); }} className="w-full py-2.5 bg-red-500 hover:bg-red-600 transition text-white rounded-full font-medium text-sm">
                   Logout
                 </button>
               </>

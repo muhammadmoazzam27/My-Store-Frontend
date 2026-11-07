@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
 
@@ -33,7 +34,6 @@ const AuthContext = ({ children }) => {
 
             .then((res) => {
                 const { status, data } = res;
-                console.log("User Profile => ", data.user)
                 if (status === 200) {
                     dispatch({ type: "SET_LOGIN", payload: data.user })
                 }
@@ -51,8 +51,14 @@ const AuthContext = ({ children }) => {
         readProfile();
     }, [])
 
+    const handleLogout = () => {
+        localStorage.removeItem("jwt")
+        dispatch({ type: "SET_LOGOUT" })
+        message.success("logout successful!")
+    }
+
     return (
-        <Auth.Provider value={{ ...state, dispatch, readProfile, isAppLoading }}>
+        <Auth.Provider value={{ ...state, dispatch, readProfile, isAppLoading, handleLogout }}>
             {children}
         </Auth.Provider>
     )
