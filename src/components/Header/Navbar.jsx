@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '@/context/AuthContext'
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
-  const [isAuth, setIsAuth] = useState(false)
+  const { isAuth } = useAuthContext();
 
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-8 lg:px-6 py-4 border-b border-gray-300 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-50 relative transition-all">

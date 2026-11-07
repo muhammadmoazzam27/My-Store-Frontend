@@ -1,13 +1,13 @@
 import Routes from "@/pages/Routes";
-import { useState } from "react";
 import ScreenLoader from "./components/ScreenLoader";
+import { useAuthContext } from "./context/AuthContext";
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(true)
+  const { isAppLoading } = useAuthContext()
   return (
     <>
       {
-        !isAuth ?
+        isAppLoading ?
           <ScreenLoader />
           :
           <Routes />

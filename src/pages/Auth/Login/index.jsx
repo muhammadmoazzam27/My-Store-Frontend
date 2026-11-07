@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import "@/utils/global"
+import { useAuthContext } from '@/context/AuthContext'
 
 const initialState = {
   email: "",
@@ -17,6 +18,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
+  const { readProfile } = useAuthContext()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +40,8 @@ const Login = () => {
         const { status, data } = res;
         if (status === 200) {
           console.log("Token => ", data.token)
+          localStorage.setItem("jwt", data.token)
+          readProfile(data.token)
           toastify(data.message || "login successful", "success")
           navigate("/")
           return
